@@ -2,6 +2,8 @@
 
 include("server.php");
 
+$index = $_GET['index'];
+
 ?>
 
 <!DOCTYPE html>
@@ -16,6 +18,32 @@ include("server.php");
     <title>Document</title>
 </head>
 <body>
-    <?php include("basis/header.php"); ?>
+    <header>
+        <?php include("basis/header.php"); ?>
+    </header>
+    <content>
+        <?php
+        
+        if($index = "login") {
+            include("login.php");
+        }
+        if($index = "settings") {
+            include("settings.php");
+        }
+        if($index = "shopping_basket") {
+            include("shopping_basket.php");
+        }
+        if($index = "orders") {
+            include("orders.php");
+        }
+        if($index = "products") {
+            include("products.php");
+        }
+        if($index = "logout") {
+            include("logout.php");
+        }
+        
+        ?>
+    </content>
 </body>
 </html>

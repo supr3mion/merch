@@ -1,6 +1,11 @@
+/* index */
+
 body {
     width: 100%;
     height: fit-content;
-    border: none;
+    border: 1px solid transparent;
     margin: 0;
 }
+
+/* login */
+

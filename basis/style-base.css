@@ -1,5 +1,10 @@
 /* build navigation: basis */
 
+#top_part {
+    width: 100%;
+    height: fit-content;
+}
+
 #space {
     width: 100%;
     height: fit-content;
@@ -13,7 +18,8 @@
 #account {
     width: 10%;
     height: fit-content;
-    margin: 10px 10px 10px auto;
+    float: right;
+    margin: 10px;
     display: grid;
     grid-template-columns: 100% 200% 200% 200% 200%;
     overflow: hidden;
@@ -28,7 +34,7 @@
     grid-template-columns: auto auto auto auto auto;
     z-index: 9999;
 }
-#account:hover .fas {
+#account:hover #flip {
     transform: rotate(180deg);
     padding-left: 5px;
 }
@@ -36,13 +42,29 @@
     margin: 0 5px;
 }
 
+/* build navigation: logo */
+
+#logo {
+    width: 100px;
+    height: 60px;
+    margin: 0 0 0 20px;
+    float: left;
+    padding: 0;
+    background: url(images/logo.png) no-repeat;
+    background-size: 90px;
+    background-position: center;
+    overflow: hidden;
+    position: relative;
+}
+
 /* build navigation: item filter */
 
 #nav {
+    width: 100%;
     display: grid;
     grid-template-columns: auto auto auto auto auto auto;
     grid-column-gap: 1%;
-    margin: 0 1%;
+    margin-right: 30px;
     font-family: sans-serif;
     font-size: 20px;
 }
