@@ -35,11 +35,11 @@ $login = array("index" => "login");
     </div>
     </div>
     <div id="nav">
-        <a class="item-type" href="filter.php?<?php echo http_build_query($kleren); ?>">kleren</a>
-        <a class="item-type" href="filter.php?<?php echo http_build_query($maskers); ?>">maskers</a>
-        <a class="item-type" href="filter.php?<?php echo http_build_query($stickers); ?>">stickers</a>
-        <a class="item-type" href="filter.php?<?php echo http_build_query($telefoon_hoezen); ?>">telefoon hoezen</a>
-        <a class="item-type" href="filter.php?<?php echo http_build_query($posters); ?>">posters</a>
-        <a class="item-type" href="filter.php?<?php echo http_build_query($accessoires); ?>">accessoires</a>
+        <a class="item-type" href="index.php?<?php echo http_build_query($kleren); ?>">kleren</a>
+        <a class="item-type" href="index.php?<?php echo http_build_query($maskers); ?>">maskers</a>
+        <a class="item-type" href="index.php?<?php echo http_build_query($stickers); ?>">stickers</a>
+        <a class="item-type" href="index.php?<?php echo http_build_query($telefoon_hoezen); ?>">telefoon hoezen</a>
+        <a class="item-type" href="index.php?<?php echo http_build_query($posters); ?>">posters</a>
+        <a class="item-type" href="index.php?<?php echo http_build_query($accessoires); ?>">accessoires</a>
     </div>
 </div>

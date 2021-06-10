@@ -2,8 +2,9 @@
 
 include("server.php");
 
-$index = $_GET['index'];
+//$index = $_GET['index'];
 
+//$type = $_GET['type'];
 ?>
 
 <!DOCTYPE html>
@@ -25,22 +26,31 @@ $index = $_GET['index'];
         <?php
         
         if($index = "login") {
+
             include("login.php");
-        }
-        if($index = "settings") {
+
+        } elseif($index = "settings") {
+
             include("settings.php");
-        }
-        if($index = "shopping_basket") {
+
+        } elseif($index = "shopping_basket") {
+
             include("shopping_basket.php");
-        }
-        if($index = "orders") {
+
+        } elseif($index = "orders") {
+
             include("orders.php");
-        }
-        if($index = "products") {
+
+        } elseif($index = "products") {
+
             include("products.php");
-        }
-        if($index = "logout") {
+
+        } elseif($index = "logout") { 
+
             include("logout.php");
+
+        } else {
+            include("login.php");
         }
         
         ?>
