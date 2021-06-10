@@ -1,0 +1,65 @@
+/* build navigation: basis */
+
+#space {
+    width: 100%;
+    height: fit-content;
+    overflow: hidden;
+    border-bottom: 2px solid black;
+    position: relative;
+}
+
+/* build navigation: account options */
+
+#account {
+    width: 10%;
+    height: fit-content;
+    margin: 10px 10px 10px auto;
+    display: grid;
+    grid-template-columns: 100% 200% 200% 200% 200%;
+    overflow: hidden;
+    position: relative;
+    z-index: 9999;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+#account:hover{
+    grid-template-columns: 100% 100% 100% 100% 100%;
+    width: fit-content;
+    grid-template-columns: auto auto auto auto auto;
+    z-index: 9999;
+}
+#account:hover .fas {
+    transform: rotate(180deg);
+    padding-left: 5px;
+}
+.fas {
+    margin: 0 5px;
+}
+
+/* build navigation: item filter */
+
+#nav {
+    display: grid;
+    grid-template-columns: auto auto auto auto auto auto;
+    grid-column-gap: 1%;
+    margin: 0 1%;
+    font-family: sans-serif;
+    font-size: 20px;
+}
+
+/* build navigation: common classes */
+
+.item-type {
+    text-align: center;
+    border-radius: 20px;
+    transition: background-color 0.2s;
+}
+.item-type:hover {
+    background-color: rgba(0, 0, 0, 0.2);
+}
+a {
+    padding: 10px;
+    margin: 0;
+    text-decoration: none;
+    color: black;
+}
