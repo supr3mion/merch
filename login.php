@@ -1,9 +1,5 @@
 <?php
 
-include("server.php");
-
-
-
 ?>
 <div id="login-container">
     
@@ -11,10 +7,10 @@ include("server.php");
 <div class="container">
     <h2>INLOGGEN</h2>
     <?php include('error.php'); ?>
-    <form action="login.php" method="POST">
+    <form action="index.php" method="POST">
         <div class="textbox">
             <i class="fas fa-envelope"></i>
-            <input type="text" placeholder="E-mail adres" name="email">
+            <input type="text" placeholder="E-mailadres / gebruikersnaam" name="email">
         </div>
         <div class="textbox">
             <i class="fas fa-key"></i>
