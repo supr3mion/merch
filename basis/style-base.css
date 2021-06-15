@@ -34,17 +34,35 @@
     border-radius: 20px;
 }
 #account:hover{
-    grid-template-columns: 100% 100% 100% 100% 100%;
-    width: fit-content;
     grid-template-columns: auto auto auto auto auto;
+    width: fit-content;
     z-index: 9999;
 }
 #account:hover #flip {
     transform: rotate(180deg);
     padding-left: 5px;
 }
-#account .fas {
+#account .fas, 
+#account-null .fas {
     margin: 0 5px;
+}
+
+#account-null {
+    float: right;
+    width: fit-content;
+    height: fit-content;
+    margin: 10px;
+    position: relative;
+    display: grid;
+    grid-template-columns: 100%;
+    background-color: rgba(0, 0, 0, 0.1);
+    border-radius: 20px;
+}
+#account-null a {
+    padding: 10px;
+    margin: 0;
+    text-decoration: none;
+    color: black;
 }
 
 /* build navigation: logo */
@@ -170,7 +188,7 @@
     display: grid;
     grid-template-columns: 33.33% 33.33% 33.33%;
     border-top: 2px solid black;
-    margin: unset 0 0 0;
+    margin: 0;
 }
 .footer-itembox {
     width: 100%;

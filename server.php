@@ -9,11 +9,10 @@ $db = mysqli_connect('localhost', 'root', '', 'merch');
 //login
 if (isset($_POST['login'])) {
     $email = mysqli_real_escape_string($db, $_POST['email']);
-    $username = mysqli_real_escape_string($db, $_POST['email']);
     $password = mysqli_real_escape_string($db, $_POST['password']);
 
     if(empty($email)) {
-        array_push($errors, "E-mailadres of gebruikersnaam invullen"); 
+        array_push($errors, "E-mailadres invullen"); 
     }
     if(empty($password)) {
         array_push($errors, "Wachtwoord invullen");
@@ -24,73 +23,131 @@ if (isset($_POST['login'])) {
         $query = "SELECT * FROM users WHERE password='$password' AND email='$email'"; 
         $result = mysqli_query($db, $query);
         if (mysqli_num_rows($result) ==1) { 
-            
-            $sqlAccount_type = "SELECT account_type FROM users WHERE password='$password' AND email='$email'";
-            $resultAccount_type = mysqli_query($db, $sqlAccount_type);
+            $user = mysqli_fetch_assoc($result);
     
-            if ($resultAccount_type == "buyer") {
-                $user = mysqli_fetch_assoc($result);
-    
-                $_SESSION['UID'] = $user['UID'];
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['account_type'] = $user['account_type'];
-                header("location: switch.php");
-            }
-            if ($resultAccount_type == "seller") {
-                $user = mysqli_fetch_assoc($result);
-    
-                $_SESSION['UID'] = $user['UID'];
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['account_type'] = $user['account_type'];
-                header("location: switch.php");
-            } 
-            if ($resultAccount_type == "admin") {
-                $user = mysqli_fetch_assoc($result);
-    
-                $_SESSION['UID'] = $user['UID'];
-                $_SESSION['username'] = $user['username'];
-                $_SESSION['account_type'] = $user['account_type'];
-                header("location: switch.php");
-            }
-            
+            $_SESSION['UID'] = $user['UID'];
+            $_SESSION['username'] = $user['username'];
+            $_SESSION['account_type'] = $user['account_type'];
+
+            $http = array("type" => "successful_login", "index" => "filter");
+
+            header('location: index.php?' . http_build_query($http));
+
         } else {
-            $query_username = "SELECT * FROM users WHERE password='$password' AND username='$username'"; 
-            $result_username = mysqli_query($db, $query_username);
-            if (mysqli_num_rows($result_username) ==1) { 
-            
-                $sqlAccount_type = "SELECT account_type FROM users WHERE password='$password' AND email='$email'";
-                $resultAccount_type = mysqli_query($db, $sqlAccount_type);
-    
-                if ($resultAccount_type == "buyer") {
-                    $user = mysqli_fetch_assoc($result);
-    
-                    $_SESSION['UID'] = $user['UID'];
-                    $_SESSION['username'] = $user['username'];
-                    $_SESSION['account_type'] = $user['account_type'];
-                    header("location: switch.php");
-                }
-                if ($resultAccount_type == "seller") {
-                    $user = mysqli_fetch_assoc($result);
-    
-                    $_SESSION['UID'] = $user['UID'];
-                    $_SESSION['username'] = $user['username'];
-                    $_SESSION['account_type'] = $user['account_type'];
-                    header("location: switch.php");
-                } 
-                if ($resultAccount_type == "admin") {
-                    $user = mysqli_fetch_assoc($result);
-    
-                    $_SESSION['UID'] = $user['UID'];
-                    $_SESSION['username'] = $user['username'];
-                    $_SESSION['account_type'] = $user['account_type'];
-                    header("location: switch.php");
-                }
-            
-            } else {
-                array_push($errors, "Wachtwoord en E-mail / gebruikersnaam adres zijn verkeerd of bestaan niet");
-            }
+            array_push($errors, "Wachtwoord en E-mail / gebruikersnaam adres zijn verkeerd of ongeldig");
         }
     }
 }
+
+
+//registreren
+if(isset($_POST['register'])) { //dit leest als ik de button heb gebruikt of niet, zo wel dan voert hij het onderstaande script uit
+    $first_name = mysqli_real_escape_string($db, $_POST['first_name']);
+    $last_name = mysqli_real_escape_string($db, $_POST['last_name']);
+    $username = mysqli_real_escape_string($db, $_POST['username']);
+    $email = mysqli_real_escape_string($db, $_POST['email']);
+    $phone = mysqli_real_escape_string($db, $_POST['phone']);
+    $password_1 = mysqli_real_escape_string($db, $_POST['password_1']);
+    $password_2 = mysqli_real_escape_string($db, $_POST['password_2']);
+    $account_type = mysqli_real_escape_string($db, $_POST['account_type']);
+    $active = "no";
+
+
+    if(empty($first_name)) { //dit gebruik ik om te zien als er een veld leeg is
+        array_push($errors, "voornaam is verplicht"); //als het veld leeg is word er een array push gedaan met de error info, dat word gestuurd naar error.php
+    }
+    if(empty($last_name)) {
+        array_push($errors, "achternaam is verplicht");
+    }
+    if(empty($username)) {
+        array_push($errors, "gebruikersnaam is verplicht");
+    }
+
+    if($password_1 != $password_2) {
+        array_push($errors, "De wachtwoorden komen niet overeen");
+    }
+
+    if(empty($email)) {  //hier kijk ik weer als hij leeg is
+        array_push($errors, "E-mail adres verplicht");
+    } else {  //als hij niet leeg is word er naar de ingevulde email gezocht in de database
+        $query = "SELECT * FROM users WHERE email='$email'";
+        $result = mysqli_query($db, $query);
+        if (mysqli_num_rows($result) ==1) { //als die word gevonden dan word er weer een array push gedaan en het formulier word geannuleerd
+            array_push($errors, "Dit E-mail adres is al in gebruik");
+        }
+    }
+
+    if (count($errors) == 0) {  //hier word er gekeken als er geen errors in de error array staan, zoniet dan word het uitgevoerd
+        $password = md5($password_1);  //hier word er een encriptie over het wachtwoord gegooid door er md5 voor te zetten en de value tusen de haakjes
+
+        if ($phone != "") {  
+
+            if ($account_type == "seller") {
+
+                $sql = "INSERT INTO users (username, email, password, phone, account_type, first_name, last_name, active) 
+                VALUES ('$username', '$email', '$password', '$phone', '$account_type', '$first_name', '$last_name', '$active')";  //de query voor het toevoegen van de user
+
+                mysqli_query($db, $sql);  //het uivoeren van de query
+
+                $http = array("type" => "successful_request", "index" => "filter");
+
+                header('location: index.php?' . http_build_query($http));
+
+            } else {
+
+                $sql = "INSERT INTO users (username, email, password, phone, account_type, first_name, last_name) 
+                VALUES ('$username', '$email', '$password', '$phone', '$account_type', '$first_name', '$last_name')";  //de query voor het toevoegen van de user
+
+                mysqli_query($db, $sql);  //het uivoeren van de query
+
+                $http = array("type" => "successful_account", "index" => "filter");
+
+
+                header('location: index.php?' . http_build_query($http));
+            }
+
+            
+        } else {
+
+            if ($account_type == "seller") {
+                $sql = "INSERT INTO users (username, email, password, account_type, first_name, last_name, active) 
+                VALUES ('$username', '$email', '$password', '$account_type', '$first_name', '$last_name', '$active')";  //de query voor het toevoegen van de user
+
+                mysqli_query($db, $sql);  //het uivoeren van de query
+
+                $http = array("type" => "successful_request", "index" => "filter");
+
+                header('location: index.php?' . http_build_query($http));
+
+            } else {
+
+                $sql = "INSERT INTO users (username, email, password, account_type, first_name, last_name) 
+                VALUES ('$username', '$email', '$password', '$account_type', '$first_name', '$last_name')";  //de query voor het toevoegen van de user
+
+                mysqli_query($db, $sql);  //het uivoeren van de query
+
+                $http = array("type" => "successful_account", "index" => "filter");
+
+                header('location: index.php?' . http_build_query($http));
+            }
+            
+        }
+
+    }
+
+}
+
+//uitloggen
+if(isset($_POST['logout'])) {
+    $_SESSION['UID'] = "0";
+    $_SESSION['username'] = "null";
+    $_SESSION['account_type'] = "null";
+
+    $successful = "u bent succesvol uitgelogd";
+    $http = array("type" => "successful_logout", "index" => "filter");
+
+    header('location: index.php?' . http_build_query($http));
+}
+
 
 ?>
