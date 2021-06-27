@@ -126,7 +126,7 @@ footer {
 .error p {
     display: unset;
     padding: 0;
-    margin: 0;
+    margin: 0 !important;
     color: white;
 } 
 
@@ -224,4 +224,91 @@ a:hover {
 #product_container a {
     grid-column-start: 1;
     grid-column-end: 3;
+}
+
+#create_container {
+    width: 80%;
+    height: fit-content;
+    color: black;
+    font-family: sans-serif;
+    font-size: 15px;
+    display: grid;
+    border-radius: 20px;
+    border: 3px solid black;
+    margin: 10px 10%;
+    overflow: hidden;
+}
+
+.product_create input[type=text] {
+    border: none;
+    outline: none;
+    background: none;
+    color: black;
+    font-size: 20px;
+    width: 80%;
+    float: left;
+    margin: 5px 10%;
+    border-bottom: 3px solid black;
+}
+
+textarea {
+    width: 80%;
+    height: 150px;
+    margin: 5px 10%;
+    padding: 0;
+    resize: none;
+    font-size: 18px;
+}
+
+.product_create input[type=file] {
+    width: 80%;
+    margin: 0 10%;
+    resize: none;
+    font-size: 20px;
+}
+.product_create input[type=file]:hover {
+    cursor: pointer;
+}
+.product_create #image p {
+    width: 80%;
+    margin: 0 10%;
+    font-size: 20px;
+}
+
+.product_create button {
+    width: 80%;
+    background-color: rgb(0, 191, 255);
+    text-align: center;
+    font-size: 20px;
+    border-radius: 20px;
+    margin: 10px 10%;
+    color: white;
+    border: none;
+}
+.product_create button p {
+    padding: 5px;
+}
+.product_create button:hover {
+    cursor: pointer;
+    background-color: blue;
+}
+#product_price {
+    width: 80%;
+    margin: 5px 10%;
+    font-size: 20px;
+}
+#product_price input {
+    width: 50px;
+    font-size: 20px;
+}
+
+#product_type {
+    width: 80%;
+    margin: 5px 10%;
+}
+#product_type select {
+    font-size: 20px;
+}
+#product_type select:hover {
+    cursor: pointer;
 }

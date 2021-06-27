@@ -150,4 +150,89 @@ if(isset($_POST['logout'])) {
 }
 
 
+//create product
+
+if(isset($_POST['create_product'])) {
+    $product_name = mysqli_real_escape_string($db, $_POST['product_name']);
+    $product_description = mysqli_real_escape_string($db, $_POST['product_description']);
+    $product_type = mysqli_real_escape_string($db, $_POST['product_type']);
+    $price1 = mysqli_real_escape_string($db, $_POST['price1']);
+    $price2 = mysqli_real_escape_string($db, $_POST['price2']);
+    $file = $_FILES['image'];
+
+    $UID = $_SESSION['UID'];
+
+    $filename = $_FILES['image']['name'];
+    $filetmpname = $_FILES['image']['tmp_name'];
+    $filesize = $_FILES['image']['size'];
+    $fileerror = $_FILES['image']['error'];
+    $filetype = $_FILES['image']['type'];
+
+    $fileext = explode('.', $filename);
+    $fileactualext = strtolower(end($fileext));
+
+    $allowed = array('jpg', 'jpeg', 'png');
+
+    //naam
+    if(empty($product_name)) {
+        array_push($errors, "product naam is verplicht <br>");
+    }
+
+    //prijs
+    if(empty($price1)) {
+        array_push($errors, "een prijs is verplicht <br>");
+    } else {
+        $price_whole = intval($price1);
+    }
+    if(empty($price2)) {
+        $price_decimal = 0;
+    } else {
+        $price_decimal = intval($price2);
+    }
+
+    //beschrijving
+    if(empty($product_description)) {
+        array_push($errors, "beschrijving is verplicht <br>");
+    }
+
+    //type
+    if($product_type == "selecteer product type <br>") {
+        array_push($errors, "kies een product type <br>");
+    }
+
+    //foto
+    if(empty($file)) {
+        array_push($errors, "foto is verplicht <br>");
+    }
+    if (in_array($fileactualext, $allowed)) {
+        if ($fileerror === 0) {
+            if ($filesize > 2000000) {
+                
+                array_push($errors, "gekozen foto is te groot <br>");
+
+            }
+        } else {
+            array_push($errors, "er was een fout tijdens het upoaden van deze foto <br>");;
+        }
+    } else {
+        array_push($errors, "u kan alleen jpg, jpeg en png foto's uploaden <br>");;
+    }
+
+    if (count($errors) == 0) {
+        $fileNameNew = $UID."product=".$product_name.".".$fileactualext;
+
+        $sql = "INSERT INTO products (UID, name, description, product_type, img, price_whole, price_decimal) 
+        VALUES ('$UID', '$product_name', '$product_description', '$product_type', '$fileNameNew', '$price_whole', '$price_decimal')";
+
+        mysqli_query($db, $sql);
+
+        $filedestination = 'product_image/'.$filenamenew;
+        move_uploaded_file($filetmpname, $filedestination);
+
+        $http = array("type" => "overview", "index" => "products");
+
+        header('location: index.php?' . http_build_query($http));
+    }
+}
+
 ?>

@@ -12,7 +12,7 @@ $shopping_basket = array("type" => "null", "index" => "shopping_basket");
 
 //voor verkopers:
 $orders = array("type" => "null", "index" => "orders");
-$products = array("type" => "null", "index" => "products");
+$products = array("type" => "overview", "index" => "products");
 
 //niet ingelogd:
 $login = array("type" => "null", "index" => "login");
@@ -28,6 +28,7 @@ $account_request = array("type" => "null", "index" => "account_request");
 //nodige informatie:
 $account_type = $_SESSION['account_type'];
 $username = $_SESSION['username'];
+$UID = $_SESSION['UID'];
 $reset = array("type" => "null", "index" => "home");
 
 ?>
