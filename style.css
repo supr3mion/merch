@@ -28,9 +28,17 @@ footer {
 .item-container {
     width: 100%;
     height: fit-content;
-    margin: 5px 0;
-    display: grid;
-    grid-template-columns: 25% 25% 25% 25%;
+    margin: 5px 10px;
+    overflow: auto;
+    white-space: nowrap;
+    font-family: sans-serif;
+}
+.item-container a {
+    color: transparent;
+    overflow: hidden;
+}
+.item-container a:hover {
+    color: transparent;
 }
 .item {
     width: 200px;
@@ -38,17 +46,45 @@ footer {
     margin: auto;
     padding: 5px;
     border-radius: 20px;
-    border: 5px solid rgba(0, 0, 0, 0.5);
+    display: inline-block;
+    overflow: hidden;
 }
 .item:hover {
     cursor: pointer;
-    border: 5px solid rgba(0, 0, 0, 1);
+    background-color: rgb(218, 218, 218);
 }
 
 .items-context {
     font-family: sans-serif;
     font-size: 20px;
     margin: 20px 0 0 10px;
+}
+
+.item .image {
+    width: 100%;
+    height: 200px;
+    border-radius: 20px;
+    overflow: hidden;
+    float: left;
+}
+.item .image img {
+    width: auto;
+    height: 100%;
+    display: block;
+    background-size: cover;
+    background-position: center;
+}
+.item .name {
+    width: 100%;
+    overflow: hidden;
+    height: fit-content;
+    font-size: 18px;
+    color: black;
+}
+.item .price {
+    float: right;
+    font-size: 15px;
+    color: black;
 }
 
 /* login, registation and logout */
@@ -311,4 +347,58 @@ textarea {
 }
 #product_type select:hover {
     cursor: pointer;
+}
+
+#product_container .product_item {
+    width: 90%;
+    margin: 5px 5%;
+    padding: 0;
+    height: fit-content;
+    border: 2px solid black;
+    overflow: hidden;
+    font-family: sans-serif;
+    border-radius: 25px;
+}
+#product_container .image {
+    width: 40%;
+    height: 200px;
+    border-radius: 20px;
+    overflow: hidden;
+    float: left;
+}
+#product_container .image img {
+    width: auto;
+    height: 100%;
+    display: block;
+    background-size: cover;
+    background-position: center;
+}
+#product_container .product_information {
+    width: 40%;
+    height: fit-content;
+    float: right;
+    margin: 0;
+}
+#product_container .product_information p {
+    margin: 5px 0;
+}
+
+#product_container .product_information .button{
+    width: fit-content;
+    height: fit-content;
+    margin: 10px 0 10px 0;
+    float: left;
+    padding: 0;
+    color: white;
+    background-color: rgb(255, 0, 0);
+    border: 4px solid transparent;
+    border-radius: 20px;
+}
+#product_container .product_information .button:hover {
+    border: 4px solid red;
+    background-color: rgb(153, 0, 0);
+    cursor: pointer;
+}
+#product_container .product_information .button p {
+    padding: 5px;
 }

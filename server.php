@@ -185,7 +185,7 @@ if(isset($_POST['create_product'])) {
         $price_whole = intval($price1);
     }
     if(empty($price2)) {
-        $price_decimal = 0;
+        $price_decimal = 00;
     } else {
         $price_decimal = intval($price2);
     }
@@ -196,8 +196,14 @@ if(isset($_POST['create_product'])) {
     }
 
     //type
-    if($product_type == "selecteer product type <br>") {
+    if($product_type == "select_product_type") {
         array_push($errors, "kies een product type <br>");
+    }
+    
+    if($product_type == "phone_case") {
+        $type = "phone case";
+    } else {
+        $type = $product_type;
     }
 
     //foto
@@ -218,21 +224,39 @@ if(isset($_POST['create_product'])) {
         array_push($errors, "u kan alleen jpg, jpeg en png foto's uploaden <br>");;
     }
 
-    if (count($errors) == 0) {
-        $fileNameNew = $UID."product=".$product_name.".".$fileactualext;
+    if (count($errors) == 0) {;
+
+        $fileProductName = md5($product_name . $product_description);
+        $fileNameNew = $UID."product=".$fileProductName.".".$fileactualext;
 
         $sql = "INSERT INTO products (UID, name, description, product_type, img, price_whole, price_decimal) 
-        VALUES ('$UID', '$product_name', '$product_description', '$product_type', '$fileNameNew', '$price_whole', '$price_decimal')";
+        VALUES ('$UID', '$product_name', '$product_description', '$type', '$fileNameNew', '$price_whole', '$price_decimal')";
 
         mysqli_query($db, $sql);
 
-        $filedestination = 'product_image/'.$filenamenew;
+        $filedestination = 'productImage/'.$fileNameNew;
         move_uploaded_file($filetmpname, $filedestination);
 
         $http = array("type" => "overview", "index" => "products");
 
         header('location: index.php?' . http_build_query($http));
     }
+}
+
+
+if(isset($_POST['delete_product'])) {
+    $PID = $_GET['PID'];
+    $img = $_GET['img'];
+
+    $sqlDelete = "DELETE FROM products WHERE PID='$PID'";
+
+    $delete = mysqli_query($db, $sqlDelete);
+
+    $http = array("type" => "overview", "index" => "products");
+
+    unlink($img);
+
+    header('location: index.php?' . http_build_query($http));
 }
 
 ?>

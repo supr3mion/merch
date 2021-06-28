@@ -12,21 +12,33 @@ if ($type == "overview") {
     
     $UID = $_SESSION['UID'];
     $sqlProducts = "SELECT * FROM products WHERE UID=$UID";
-    $productsOverview = mysqli_query($db, $sqlP);
+    $productsOverview = mysqli_query($db, $sqlProducts);
 
-    while ($record = mysqli_fetch_assoc($pending)) {
+    while ($record = mysqli_fetch_assoc($productsOverview)) {
     
         $product_name = $record['name'];
         $product_description = $record['description'];
         $product_type = $record['product_type'];
-        $img = 'product_image/'.$record['img'];
-        $price_total = $record['price_whole'] . "," . $record['price_decimal'];
+        $img = 'productImage/'.$record['img'];
+        $price_total = "€ " . $record['price_whole'] . "," . $record['price_decimal'];
         $times_sold = $record['times_sold'];
+        $product_ID = $record['PID'];
+
+        $data = array("PID" => $product_ID, "img" => $img);
     ?>
 
         <div class="product_item">
             <div class="image">
-                <img src=<?php echo $img ?>>
+                <img src="<?php echo $img ?>" alt="product image">
+            </div>
+            <div class="product_information">
+                <p>naam product:<br><?php echo $product_name ?></p>
+                <p>prijs product:<br><?php echo strval($price_total) ?></p>
+                <p>product type:<br><?php echo $product_type ?></p>
+                <p>beschrijving product:<br><?php echo $product_description ?></p>
+                <form action="server.php?<?php echo http_build_query($data); ?>" method="POST">
+                    <button type="submit" name="delete_product" class="button"><p>DELETE PRODUCT</p></button>
+                </form>
             </div>
         </div>
 
@@ -52,7 +64,7 @@ if ($type == "create") {
             </div>
             <div id="product_type">
                 <select name="product_type">
-                    <option value="">selecteer product type</option>
+                    <option value="select_product_type">selecteer product type</option>
                     <option value="mask">mondkapje</option>
                     <option value="stickers">stickers</option>
                     <option value="phone_case">telefoon hoes</option>

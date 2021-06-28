@@ -58,6 +58,9 @@ if ($index == "") {
         } if ($index == "products") {
             include("products.php");
             $current_index = $index;
+        } if ($index == "PID") {
+            include("PID.php");
+            $current_index = $index;
         }
     }
 
