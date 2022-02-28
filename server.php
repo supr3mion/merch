@@ -149,6 +149,39 @@ if(isset($_POST['logout'])) {
     header('location: index.php?' . http_build_query($http));
 }
 
+//delete product
+if(isset($_POST['delete_product'])) {
+    $PID = $_GET['PID'];
+    $UID = $_GET['UID'];
+
+    $sqlDelete = "DELETE FROM products WHERE PID='$PID'";
+    
+    $sqlAdd = "INSERT INTO orders (PID, UID) 
+    VALUES ('$PID', '$UID')";
+
+    $add = mysqli_query($db, $sqlAdd);
+
+    $http = array("type" => $PID, "index" => "PID");
+
+    header('location: index.php?' . http_build_query($http));
+}
+
+//voeg product toe aan winkelwagen
+if(isset($_POST['buy_product'])) {
+    $PID = $_GET['PID'];
+    $UID = $_GET['UID'];
+
+    $sqlDelete = "DELETE FROM products WHERE PID='$PID'";
+
+    $delete = mysqli_query($db, $sqlDelete);
+
+    $http = array("type" => "overview", "index" => "products");
+
+    unlink($img);
+
+    header('location: index.php?' . http_build_query($http));
+}
+
 
 //create product
 
@@ -199,7 +232,7 @@ if(isset($_POST['create_product'])) {
     if($product_type == "select_product_type") {
         array_push($errors, "kies een product type <br>");
     }
-    
+
     if($product_type == "phone_case") {
         $type = "phone case";
     } else {
@@ -243,20 +276,5 @@ if(isset($_POST['create_product'])) {
     }
 }
 
-
-if(isset($_POST['delete_product'])) {
-    $PID = $_GET['PID'];
-    $img = $_GET['img'];
-
-    $sqlDelete = "DELETE FROM products WHERE PID='$PID'";
-
-    $delete = mysqli_query($db, $sqlDelete);
-
-    $http = array("type" => "overview", "index" => "products");
-
-    unlink($img);
-
-    header('location: index.php?' . http_build_query($http));
-}
 
 ?>

@@ -1,6 +1,6 @@
 <?php
 
-$sqlGet = "SELECT * FROM products ORDER BY PID ASC LIMIT 20";
+$sqlGet = "SELECT * FROM products ORDER BY PID DESC LIMIT 20";
 $newProducts = mysqli_query($db, $sqlGet);
 
 ?>
